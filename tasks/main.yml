@@ -1,3 +1,9 @@
 ---
+- name: create /etc/systemd/system/firewalld.service.d
+  file: state=directory dest=/etc/systemd/system/firewalld.service.d
+
+- name: put /etc/systemd/system/firewalld.service.d/docker.conf
+  template: src=docker.conf dest=/etc/systemd/system/firewalld.service.d/docker.conf
+
 - name: install firewalld
   apt: name=firewalld
