@@ -7,3 +7,11 @@
 
 - name: install firewalld
   apt: name=firewalld
+
+- name: apply firewalld rules
+  shell: firewall-cmd --add-port={{ item }}
+  with_items: "{{ firewalld.open_ports }}"
+
+- name: apply firewalld rules permanently
+  shell: firewall-cmd --add-port={{ item }} --permanent
+  with_items: "{{ firewalld.open_ports }}"
