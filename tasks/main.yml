@@ -47,3 +47,11 @@
 - name: add external interfaces to an external zone permanently
   shell: firewall-cmd --zone=external --add-interface={{ item }} --permanent
   with_items: "{{ firewalld.external_interfaces }}"
+
+- name: add port forwarding rules to an external zone
+  shell: firewall-cmd --zone=external --add-forward-port=port={{ item.port }}:proto={{ item.proto }}:toport={{ item.toport }}:toaddr={{ item.toaddr }}
+  with_items: "{{ firewalld.forwarded_ports }}"
+
+- name: add port forwarding rules to an external zone permanently
+  shell: firewall-cmd --zone=external --add-forward-port=port={{ item.port }}:proto={{ item.proto }}:toport={{ item.toport }}:toaddr={{ item.toaddr }} --permanent
+  with_items: "{{ firewalld.forwarded_ports }}"
