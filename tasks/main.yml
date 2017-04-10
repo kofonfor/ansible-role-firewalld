@@ -23,3 +23,19 @@
 - name: add trusted interfaces to a trusted zone permanently
   shell: firewall-cmd --zone=trusted --add-interface={{ item }} --permanent
   with_items: "{{ firewalld.trusted_interfaces }}"
+
+- name: create masquerading rule in certain zones
+  shell: firewall-cmd --zone={{ item }} --add-masquerade
+  with_items: "{{ firewalld.masq_zones }}"
+
+- name: create masquerading rule in certain zones permanently
+  shell: firewall-cmd --zone={{ item }} --add-masquerade --permanent
+  with_items: "{{ firewalld.masq_zones }}"
+
+- name: add external interfaces to an external zone
+  shell: firewall-cmd --zone=external --add-interface={{ item }}
+  with_items: "{{ firewalld.external_interfaces }}"
+
+- name: add external interfaces to an external zone permanently
+  shell: firewall-cmd --zone=external --add-interface={{ item }} --permanent
+  with_items: "{{ firewalld.external_interfaces }}"
