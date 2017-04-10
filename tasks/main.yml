@@ -16,6 +16,14 @@
   shell: firewall-cmd --add-port={{ item }} --permanent
   with_items: "{{ firewalld.open_ports }}"
 
+- name: add open ports to external zone
+  shell: firewall-cmd --zone=external --add-port={{ item }}
+  with_items: "{{ firewalld.open_ports }}"
+
+- name: add open ports to external zone permanently
+  shell: firewall-cmd --zone=external --add-port={{ item }} --permanent
+  with_items: "{{ firewalld.open_ports }}"
+
 - name: add trusted interfaces to a trusted zone
   shell: firewall-cmd --zone=trusted --add-interface={{ item }}
   with_items: "{{ firewalld.trusted_interfaces }}"
