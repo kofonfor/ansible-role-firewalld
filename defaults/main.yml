@@ -6,3 +6,6 @@ firewalld:
   trusted_interfaces: []
   masq_zones: []
   external_interfaces: []
+  forwarded_ports: []
+  rich_rules: []
+  direct_rules: []
