@@ -7,6 +7,7 @@
 
 - name: install firewalld
   apt: name=firewalld
+  when: ansible_os_family == 'Debian'
 
 - name: apply firewalld rules
   shell: firewall-cmd --add-port={{ item }}
