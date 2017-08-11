@@ -1,3 +1,4 @@
+firewalld_disable: False
 firewalld:
   open_ports:
     - 22/tcp
