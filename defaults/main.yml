@@ -2,8 +2,6 @@ firewalld_disable: False
 firewalld:
   open_ports:
     - 22/tcp
-    - 80/tcp
-    - 443/tcp
   trusted_interfaces: []
   masq_zones: []
   external_interfaces: []
