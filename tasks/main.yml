@@ -74,12 +74,12 @@
   when: "not firewalld_disable"
 
 - name: add rich rules to an external zone
-  shell: firewall-cmd --zone=external --add-rich-rule='{{ item.rule }}'
+  shell: firewall-cmd --zone={{ item.zone }} --add-rich-rule='{{ item.rule }}'
   with_items: "{{ firewalld.rich_rules }}"
   when: "not firewalld_disable"
 
 - name: add rich rules to an external zone permanently
-  shell: firewall-cmd --zone=external --add-rich-rule='{{ item.rule }}' --permanent
+  shell: firewall-cmd --zone={{ item.zone }} --add-rich-rule='{{ item.rule }}' --permanent
   with_items: "{{ firewalld.rich_rules }}"
   when: "not firewalld_disable"
 
