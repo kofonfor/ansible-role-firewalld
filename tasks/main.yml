@@ -38,6 +38,10 @@
   with_items: "{{ firewalld.open_ports }}"
   when: "not firewalld_disable"
 
+- name: set default target to ACCEPT for the trusted zone permanently
+  shell: firewall-cmd --permanent --zone=trusted --set-target=ACCEPT
+  when: "not firewalld_disable"
+
 - name: add trusted interfaces to a trusted zone
   shell: firewall-cmd --zone=trusted --add-interface={{ item }}
   with_items: "{{ firewalld.trusted_interfaces }}"
