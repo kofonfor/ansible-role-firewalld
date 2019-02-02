@@ -1,0 +1,5 @@
+- name: temporarily stop firewalld
+  service: name=firewalld state=stopped
+
+- name: temporarily set default to trusted
+  shell: firewall-cmd --set-default-zone=trusted
