@@ -2,4 +2,4 @@
   service: name=firewalld state=stopped
 
 - name: temporarily set default to trusted
-  shell: firewall-cmd --set-default-zone=trusted
+  command: firewall-cmd --set-default-zone=trusted

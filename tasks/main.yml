@@ -17,93 +17,93 @@
   when: firewalld_disable
 
 - name: enable logging of denied packets
-  shell: firewall-cmd --set-log-denied=all
+  command: firewall-cmd --set-log-denied=all
   ignore_errors: True
   when: "not firewalld_disable"
 
 - name: apply firewalld rules
-  shell: firewall-cmd --add-port={{ item }}
+  command: firewall-cmd --add-port={{ item }}
   with_items: "{{ firewalld.open_ports }}"
   when: "not firewalld_disable"
 
 - name: apply firewalld rules permanently
-  shell: firewall-cmd --add-port={{ item }} --permanent
+  command: firewall-cmd --add-port={{ item }} --permanent
   with_items: "{{ firewalld.open_ports }}"
   when: "not firewalld_disable"
 
 - name: add open ports to external zone
-  shell: firewall-cmd --zone=external --add-port={{ item }}
+  command: firewall-cmd --zone=external --add-port={{ item }}
   with_items: "{{ firewalld.open_ports }}"
   when: "not firewalld_disable"
 
 - name: add open ports to external zone permanently
-  shell: firewall-cmd --zone=external --add-port={{ item }} --permanent
+  command: firewall-cmd --zone=external --add-port={{ item }} --permanent
   with_items: "{{ firewalld.open_ports }}"
   when: "not firewalld_disable"
 
 - name: set default target to ACCEPT for the trusted zone permanently
-  shell: firewall-cmd --permanent --zone=trusted --set-target=ACCEPT
+  command: firewall-cmd --permanent --zone=trusted --set-target=ACCEPT
   when: "not firewalld_disable"
 
 - name: create masquerading rule in certain zones
-  shell: firewall-cmd --zone={{ item }} --add-masquerade
+  command: firewall-cmd --zone={{ item }} --add-masquerade
   with_items: "{{ firewalld.masq_zones }}"
   when: "not firewalld_disable"
 
 - name: create masquerading rule in certain zones permanently
-  shell: firewall-cmd --zone={{ item }} --add-masquerade --permanent
+  command: firewall-cmd --zone={{ item }} --add-masquerade --permanent
   with_items: "{{ firewalld.masq_zones }}"
   when: "not firewalld_disable"
 
 - name: add port forwarding rules to an external zone
-  shell: firewall-cmd --zone=external --add-forward-port=port={{ item.port }}:proto={{ item.proto }}:toport={{ item.toport }}:toaddr={{ item.toaddr }}
+  command: firewall-cmd --zone=external --add-forward-port=port={{ item.port }}:proto={{ item.proto }}:toport={{ item.toport }}:toaddr={{ item.toaddr }}
   with_items: "{{ firewalld.forwarded_ports }}"
   when: "not firewalld_disable"
 
 - name: add port forwarding rules to an external zone permanently
-  shell: firewall-cmd --zone=external --add-forward-port=port={{ item.port }}:proto={{ item.proto }}:toport={{ item.toport }}:toaddr={{ item.toaddr }} --permanent
+  command: firewall-cmd --zone=external --add-forward-port=port={{ item.port }}:proto={{ item.proto }}:toport={{ item.toport }}:toaddr={{ item.toaddr }} --permanent
   with_items: "{{ firewalld.forwarded_ports }}"
   when: "not firewalld_disable"
 
 - name: add rich rules to corresponding zones
-  shell: firewall-cmd --zone={{ item.zone }} --add-rich-rule='{{ item.rule }}'
+  command: firewall-cmd --zone={{ item.zone }} --add-rich-rule='{{ item.rule }}'
   with_items: "{{ firewalld.rich_rules }}"
   when: "not firewalld_disable"
 
 - name: add rich rules to corresponding zones permanently
-  shell: firewall-cmd --zone={{ item.zone }} --add-rich-rule='{{ item.rule }}' --permanent
+  command: firewall-cmd --zone={{ item.zone }} --add-rich-rule='{{ item.rule }}' --permanent
   with_items: "{{ firewalld.rich_rules }}"
   when: "not firewalld_disable"
 
 - name: add direct rules
-  shell: firewall-cmd --direct --add-rule ipv4 {{ item.table }} {{ item.chain }} {{ item.priority }} {{ item.args }}
+  command: firewall-cmd --direct --add-rule ipv4 {{ item.table }} {{ item.chain }} {{ item.priority }} {{ item.args }}
   with_items: "{{ firewalld.direct_rules }}"
   when: "not firewalld_disable"
 
 - name: add direct rules permanently
-  shell: firewall-cmd --direct --add-rule ipv4 {{ item.table }} {{ item.chain }} {{ item.priority }} {{ item.args }} --permanent
+  command: firewall-cmd --direct --add-rule ipv4 {{ item.table }} {{ item.chain }} {{ item.priority }} {{ item.args }} --permanent
   with_items: "{{ firewalld.direct_rules }}"
   when: "not firewalld_disable"
 
 - name: add trusted interfaces to a trusted zone
-  shell: firewall-cmd --zone=trusted --add-interface={{ item }}
+  command: firewall-cmd --zone=trusted --add-interface={{ item }}
   with_items: "{{ firewalld.trusted_interfaces }}"
   when: "not firewalld_disable"
 
 - name: add trusted interfaces to a trusted zone permanently
-  shell: firewall-cmd --zone=trusted --add-interface={{ item }} --permanent
+  command: firewall-cmd --zone=trusted --add-interface={{ item }} --permanent
   with_items: "{{ firewalld.trusted_interfaces }}"
   when: "not firewalld_disable"
 
 - name: add external interfaces to an external zone
-  shell: firewall-cmd --zone=external --add-interface={{ item }}
+  command: firewall-cmd --zone=external --add-interface={{ item }}
   with_items: "{{ firewalld.external_interfaces }}"
   when: "not firewalld_disable"
 
 - name: add external interfaces to an external zone permanently
-  shell: firewall-cmd --zone=external --add-interface={{ item }} --permanent
+  command: firewall-cmd --zone=external --add-interface={{ item }} --permanent
   with_items: "{{ firewalld.external_interfaces }}"
   when: "not firewalld_disable"
 
 - name: set default zone to public
-  shell: firewall-cmd --set-default-zone=public
+  command: firewall-cmd --set-default-zone=public
