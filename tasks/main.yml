@@ -61,7 +61,8 @@
   when: "not firewalld_disable"
 
 - name: add port forwarding rules to an external zone permanently
-  command: firewall-cmd --zone=external --add-forward-port=port={{ item.port }}:proto={{ item.proto }}:toport={{ item.toport }}:toaddr={{ item.toaddr }} --permanent
+  command: "firewall-cmd --zone=external
+            --add-forward-port=port={{ item.port }}:proto={{ item.proto }}:toport={{ item.toport }}:toaddr={{ item.toaddr }} --permanent"
   with_items: "{{ firewalld.forwarded_ports }}"
   when: "not firewalld_disable"
 
