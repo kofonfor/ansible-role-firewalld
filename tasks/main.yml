@@ -8,6 +8,7 @@
 - name: install firewalld
   apt: name=firewalld
   notify: temporarily set default to trusted
+  register: trusted
   when: ansible_os_family == 'Debian'
 
 - meta: flush_handlers
@@ -108,3 +109,4 @@
 
 - name: set default zone to public
   command: firewall-cmd --set-default-zone=public
+  when: trusted is changed
