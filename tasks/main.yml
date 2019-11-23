@@ -11,6 +11,12 @@
   register: trusted
   when: ansible_os_family == 'Debian'
 
+- name: install firewalld
+  yum: name=firewalld
+  notify: temporarily set default to trusted
+  register: trusted
+  when: ansible_os_family == 'RedHat'
+
 - meta: flush_handlers
 
 - name: disable firewalld
