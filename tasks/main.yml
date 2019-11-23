@@ -17,6 +17,10 @@
   register: trusted
   when: ansible_os_family == 'RedHat'
 
+- name: enable firewalld on RedHat
+  service: name=firewalld state=started enabled=yes
+  when: "not firewalld_disable and ansible_os_family == 'RedHat'"
+
 - meta: flush_handlers
 
 - name: disable firewalld
